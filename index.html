@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finding the Value of a System of Linear Congruence with 2 Variables</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Finding the Value of a System of Linear Congruence with 2 Variables</h1>
+        <div class="input-container">
+            <label for="coefficientsInput">Enter coefficients a, b, c, d:</label>
+            <input type="text" id="coefficientsInput" placeholder="a b c d">
+        </div>
+        <div class="input-container">
+            <label for="modInput">Enter mod value as p:</label>
+            <input type="text" id="modInput" placeholder="p">
+        </div>
+        <div class="input-container">
+            <label for="powerInput">Enter number of p raised to the power of n:</label>
+            <input type="text" id="powerInput" placeholder="n">
+        </div>
+        <button onclick="calculate()">Calculate</button>
+        <p id="result"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
