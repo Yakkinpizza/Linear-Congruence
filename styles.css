@@ -3,59 +3,79 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f8f8f8;
+    min-height: 100vh;
+    background: linear-gradient(to right, #001a33, #003366, #001a33); /* Dark Blue Gradient */
+    font-family: 'Roboto', sans-serif; /* Bold and Simple Font */
+    color: #fff;
 }
 
 .container {
-    max-width: 1000px;
-    padding: 20px;
-    border: 2px solid #3498db;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    padding: 70px; /* Increased padding for more space */
+    border: 2px solid #ffa000; /* Darker Yellow */
+    border-radius: 15px;
+    background: linear-gradient(to right, #f2f2f2, #fff); /* Light Gray to White Gradient */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
 h1 {
-    color: #3498db;
-    margin-bottom: 20px;
+    font-weight: bold; /* Bold Font */
+    color: #ffa000; /* Darker Yellow */
+    margin-bottom: 30px; /* Increased margin for more space */
 }
 
-.input-container {
-    margin-bottom: 15px;
+/* Label styles */
+.label-container {
     text-align: left;
+    margin-bottom: 10px;
 }
 
 label {
     display: block;
     margin-bottom: 5px;
-    color: #333;
+    color: #333; /* Dark Gray */
 }
 
 input {
-    width: calc(100% - 12px);
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: calc(100% - 24px);
+    padding: 15px;
+    border: 2px solid #90a4ae; /* Blue Gray */
+    border-radius: 8px;
     box-sizing: border-box;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
 }
 
-button {
-    padding: 10px;
-    background-color: #3498db;
+.calculate-button {
+    padding: 20px 40px; /* Increased padding for a larger button */
+    background: linear-gradient(to right, #ffa000, #e68a00); /* Dark Yellow to Slightly Darker Yellow */
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px; /* Increased border radius for a more rounded appearance */
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px; /* Increased font size */
+    font-weight: bold;
 }
 
-button:hover {
-    background-color: #2980b9;
+.calculate-button:hover {
+    background: linear-gradient(to right, #e68a00, #d17a00); /* Slightly Darker Yellow to Darker Yellow on Hover */
 }
 
 #result {
-    margin-top: 20px;
-    color: #333;
+    margin-top: 30px; /* Increased margin for more space */
+    color: #333; /* Dark Gray text for better readability */
+}
+
+/* Add some responsiveness */
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 30px;
+    }
+
+    input,
+    .calculate-button {
+        width: 100%;
+    }
 }
