@@ -6,8 +6,13 @@ function gcd(a, b) {
 function calculate() {
     const coefficientsInput = document.getElementById('coefficientsInput').value;
 
-    // Split coefficients using commas
-    const coefficientsArray = coefficientsInput.split(',');
+    // Remove spaces and split coefficients using commas or spaces
+    const coefficientsArray = coefficientsInput.replace(/\s/g, '').split(',');
+
+    // If the input doesn't contain commas, try splitting using spaces
+    if (coefficientsArray.length !== 4) {
+        coefficientsArray = coefficientsInput.split(/\s+/);
+    }
 
     // Extract coefficients
     const a = parseInt(coefficientsArray[0]);
