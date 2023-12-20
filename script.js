@@ -1,16 +1,14 @@
-// Function to calculate the greatest common divisor (gcd)
-function gcd(a, b) {
-    return b === 0 ? a : gcd(b, a % b);
-}
-
 function calculate() {
     const coefficientsInput = document.getElementById('coefficientsInput').value;
 
-    // Extract coefficients without spaces
-    const a = parseInt(coefficientsInput.charAt(0));
-    const b = parseInt(coefficientsInput.charAt(1));
-    const c = parseInt(coefficientsInput.charAt(2));
-    const d = parseInt(coefficientsInput.charAt(3));
+    // Remove spaces and split coefficients using commas
+    const coefficientsArray = coefficientsInput.replace(/\s/g, '').split(',');
+
+    // Extract coefficients
+    const a = parseInt(coefficientsArray[0]);
+    const b = parseInt(coefficientsArray[1]);
+    const c = parseInt(coefficientsArray[2]);
+    const d = parseInt(coefficientsArray[3]);
 
     const modValue = parseInt(document.getElementById('modInput').value);
     const powerValue = parseInt(document.getElementById('powerInput').value);
