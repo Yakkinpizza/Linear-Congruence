@@ -15,6 +15,12 @@ function calculate() {
     const c = parseInt(coefficientsArray[2]);
     const d = parseInt(coefficientsArray[3]);
 
+    // Add a condition to check if d - b is not equal to 1
+    if (d - b !== 1) {
+        document.getElementById('result').innerText = 'ERROR';
+        return;
+    }
+
     const modValue = parseInt(document.getElementById('modInput').value);
     const powerValue = parseInt(document.getElementById('powerInput').value);
 
