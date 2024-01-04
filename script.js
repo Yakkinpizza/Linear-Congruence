@@ -27,7 +27,7 @@ function calculate() {
     let foundError = false;
 
     // Check if a * d - b * c is zero or if the absolute difference is not 1 or if gcd(ad - bc, p) is not 1
-    if (a * d - b * c === 0 || Math.abs(d) - Math.abs(b) !== 1 || gcd(a * d - b * c, modValue) !== 1) {
+    if (a * d - b * c === 0 || d-b !== 1 || gcd(a * d - b * c, modValue) !== 1) {
         result = 'ERROR';
         foundError = true;
     }
