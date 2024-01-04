@@ -1,13 +1,8 @@
-// Function to calculate the greatest common divisor (gcd)
-function gcd(a, b) {
-    return b === 0 ? a : gcd(b, a % b);
-}
-
 function calculate() {
     const coefficientsInput = document.getElementById('coefficientsInput').value;
 
     // Remove spaces and split coefficients using commas or spaces
-    const coefficientsArray = coefficientsInput.replace(/\s/g, '').split(',');
+    let coefficientsArray = coefficientsInput.replace(/\s/g, '').split(',');
 
     // If the input doesn't contain commas, try splitting using spaces
     if (coefficientsArray.length !== 4) {
@@ -26,23 +21,22 @@ function calculate() {
     let result = '';
     let foundError = false;
 
-    // Check if a * d - b * c is zero or if the absolute difference is not 1 or if gcd(ad - bc, p) is not 1
-    if (a * d - b * c === 0 || d-b !== 1 || gcd(a * d - b * c, modValue) !== 1) {
-        result = 'ERROR';
-        foundError = true;
+    // Calculate initial values of X and Y
+    let X = parseInt(((((a * d) - (b * c)) ** (modValue - 2)) * ((d % modValue) + (-b % modValue))) % modValue);
+    let Y = parseInt(((((a * d) - (b * c)) ** (modValue - 2)) * ((-c % modValue) + (a % modValue))) % modValue);
+
+    // Iterate for the specified powerValue
+    for (let i = 0; i < Math.log2(powerValue); i++) {
+        const X1 = parseInt(X * (2 + X * (c * b - a * d)));
+        const Y1 = parseInt(Y - X * (d * a * Y - b * c * Y + c - a));
+        X = X1;
+        Y = Y1;
     }
 
-    if (!foundError) {
-        let X = parseInt(((((a * d) - (b * c)) ** (modValue - 2)) * ((d % modValue) + (-b % modValue))) % modValue);
-        let Y = parseInt(((((a * d) - (b * c)) ** (modValue - 2)) * ((-c % modValue) + (a % modValue))) % modValue);
-
-        for (let i = 0; i < Math.log2(powerValue); i++) {
-            const X1 = parseInt(X * (2 + X * (c * b - a * d)));
-            const Y1 = parseInt(Y - X * (d * a * Y - b * c * Y + c - a));
-            X = X1;
-            Y = Y1;
-        }
-
+    // Check if both X and Y are equal to 0
+    if (X === 0 && Y === 0) {
+        result = 'ERROR';
+    } else {
         // Check if the final result of X or Y is more than P^n or less than zero
         if (X < 0 || X >= Math.pow(modValue, powerValue) || Y < 0 || Y >= Math.pow(modValue, powerValue)) {
             // Calculate new X and Y based on the specified format
