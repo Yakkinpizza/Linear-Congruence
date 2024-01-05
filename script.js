@@ -16,7 +16,10 @@ function calculate() {
     const d = BigInt(coefficientsArray[3]);
 
     // Calculate the GCD of (ad - bc) and p^n
-    const gcdResult = gcd(BigInt(Math.abs((a * d) - (b * c))), BigInt(Math.pow(parseInt(document.getElementById('modInput').value), parseInt(document.getElementById('powerInput').value))));
+    const modValue = BigInt(document.getElementById('modInput').value);
+    const powerValue = BigInt(document.getElementById('powerInput').value);
+
+    const gcdResult = gcd(BigInt(Math.abs((a * d) - (b * c))), modValue ** powerValue);
 
     // Check if the GCD is not equal to 1
     if (gcdResult !== BigInt(1)) {
@@ -24,22 +27,19 @@ function calculate() {
         return;
     }
 
-    const modValue = BigInt(document.getElementById('modInput').value);
-    const powerValue = BigInt(document.getElementById('powerInput').value);
-
     let result = '';
     let foundError = false;
 
     // Calculate initial values of X and Y
-    let X = BigInt(((((a * d) - (b * c)) ** (modValue - BigInt(2))) * ((d % modValue) + (-b % modValue))) % modValue);
-    let Y = BigInt(((((a * d) - (b * c)) ** (modValue - BigInt(2))) * ((-c % modValue) + (a % modValue))) % modValue);
+    let X = ((((a * d) - (b * c)) ** (modValue - BigInt(2))) * ((d % modValue) + (-b % modValue))) % modValue;
+    let Y = ((((a * d) - (b * c)) ** (modValue - BigInt(2))) * ((-c % modValue) + (a % modValue))) % modValue;
 
     // Iterate for the specified powerValue
     for (let i = BigInt(0); i < powerValue; i += BigInt(1)) {
-        const X1 = BigInt(X * (BigInt(2) + X * (c * b - a * d)));
-        const Y1 = BigInt(Y - X * (d * a * Y - b * c * Y + c - a));
-        X = X1;
-        Y = Y1;
+        const X1 = X * (BigInt(2) + X * (c * b - a * d));
+        const Y1 = Y - X * (d * a * Y - b * c * Y + c - a);
+        X = X1 % modValue;
+        Y = Y1 % modValue;
     }
 
     // Check if both X and Y are equal to 0
@@ -49,12 +49,12 @@ function calculate() {
         // Check if the final result of X or Y is more than P^n or less than zero
         if (X < BigInt(0) || X >= modValue ** powerValue || Y < BigInt(0) || Y >= modValue ** powerValue) {
             // Calculate new X and Y based on the specified format
-            const X1 = BigInt(X + modValue ** powerValue / modValue ** powerValue * modValue ** powerValue);
-            const Y1 = BigInt(Y + modValue ** powerValue / modValue ** powerValue * modValue ** powerValue);
+            const X1 = X + modValue ** powerValue / modValue ** powerValue * modValue ** powerValue;
+            const Y1 = Y + modValue ** powerValue / modValue ** powerValue * modValue ** powerValue;
 
             // Calculate the output based on the specified format
-            const outputX = BigInt(X1 + modValue ** powerValue * (Math.ceil(-X1 / modValue ** powerValue)));
-            const outputY = BigInt(Y1 + modValue ** powerValue * (Math.ceil(-Y1 / modValue ** powerValue)));
+            const outputX = X1 + modValue ** powerValue * (BigInt(Math.ceil(-X1 / modValue ** powerValue)));
+            const outputY = Y1 + modValue ** powerValue * (BigInt(Math.ceil(-Y1 / modValue ** powerValue)));
 
             result = `Adjusted Result:\nX = ${outputX} + ${modValue ** powerValue}m\nY = ${outputY} + ${modValue ** powerValue}m`;
         } else {
