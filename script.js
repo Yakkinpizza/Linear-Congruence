@@ -15,8 +15,11 @@ function calculate() {
     const c = parseInt(coefficientsArray[2]);
     const d = parseInt(coefficientsArray[3]);
 
-    // Add a condition to check if d - b is not equal to 1
-    if (d - b !== 1) {
+    // Calculate the GCD of (ad - bc) and p^n
+    const gcdResult = gcd(Math.abs((a * d) - (b * c)), Math.pow(parseInt(document.getElementById('modInput').value), parseInt(document.getElementById('powerInput').value)));
+
+    // Check if the GCD is not equal to 1
+    if (gcdResult !== 1) {
         document.getElementById('result').innerText = 'ERROR';
         return;
     }
@@ -60,4 +63,14 @@ function calculate() {
     }
 
     document.getElementById('result').innerText = result;
+}
+
+// Function to calculate the Greatest Common Divisor (GCD) using Euclidean algorithm
+function gcd(a, b) {
+    while (b !== 0) {
+        const temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
 }
