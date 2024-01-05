@@ -10,55 +10,55 @@ function calculate() {
     }
 
     // Extract coefficients
-    const a = parseInt(coefficientsArray[0]);
-    const b = parseInt(coefficientsArray[1]);
-    const c = parseInt(coefficientsArray[2]);
-    const d = parseInt(coefficientsArray[3]);
+    const a = BigInt(coefficientsArray[0]);
+    const b = BigInt(coefficientsArray[1]);
+    const c = BigInt(coefficientsArray[2]);
+    const d = BigInt(coefficientsArray[3]);
 
     // Calculate the GCD of (ad - bc) and p^n
-    const gcdResult = gcd(Math.abs((a * d) - (b * c)), Math.pow(parseInt(document.getElementById('modInput').value), parseInt(document.getElementById('powerInput').value)));
+    const gcdResult = gcd(BigInt(Math.abs((a * d) - (b * c))), BigInt(Math.pow(parseInt(document.getElementById('modInput').value), parseInt(document.getElementById('powerInput').value))));
 
     // Check if the GCD is not equal to 1
-    if (gcdResult !== 1) {
+    if (gcdResult !== BigInt(1)) {
         document.getElementById('result').innerText = 'ERROR';
         return;
     }
 
-    const modValue = parseInt(document.getElementById('modInput').value);
-    const powerValue = parseInt(document.getElementById('powerInput').value);
+    const modValue = BigInt(document.getElementById('modInput').value);
+    const powerValue = BigInt(document.getElementById('powerInput').value);
 
     let result = '';
     let foundError = false;
 
     // Calculate initial values of X and Y
-    let X = parseInt(((((a * d) - (b * c)) ** (modValue - 2)) * ((d % modValue) + (-b % modValue))) % modValue);
-    let Y = parseInt(((((a * d) - (b * c)) ** (modValue - 2)) * ((-c % modValue) + (a % modValue))) % modValue);
+    let X = BigInt(((((a * d) - (b * c)) ** (modValue - BigInt(2))) * ((d % modValue) + (-b % modValue))) % modValue);
+    let Y = BigInt(((((a * d) - (b * c)) ** (modValue - BigInt(2))) * ((-c % modValue) + (a % modValue))) % modValue);
 
     // Iterate for the specified powerValue
-    for (let i = 0; i < Math.log2(powerValue); i++) {
-        const X1 = parseInt(X * (2 + X * (c * b - a * d)));
-        const Y1 = parseInt(Y - X * (d * a * Y - b * c * Y + c - a));
+    for (let i = BigInt(0); i < powerValue; i += BigInt(1)) {
+        const X1 = BigInt(X * (BigInt(2) + X * (c * b - a * d)));
+        const Y1 = BigInt(Y - X * (d * a * Y - b * c * Y + c - a));
         X = X1;
         Y = Y1;
     }
 
     // Check if both X and Y are equal to 0
-    if (X === 0 && Y === 0) {
+    if (X === BigInt(0) && Y === BigInt(0)) {
         result = 'ERROR';
     } else {
         // Check if the final result of X or Y is more than P^n or less than zero
-        if (X < 0 || X >= Math.pow(modValue, powerValue) || Y < 0 || Y >= Math.pow(modValue, powerValue)) {
+        if (X < BigInt(0) || X >= modValue ** powerValue || Y < BigInt(0) || Y >= modValue ** powerValue) {
             // Calculate new X and Y based on the specified format
-            const X1 = parseInt(X + Math.pow(modValue, powerValue) / Math.pow(modValue, powerValue) * Math.pow(modValue, powerValue));
-            const Y1 = parseInt(Y + Math.pow(modValue, powerValue) / Math.pow(modValue, powerValue) * Math.pow(modValue, powerValue));
+            const X1 = BigInt(X + modValue ** powerValue / modValue ** powerValue * modValue ** powerValue);
+            const Y1 = BigInt(Y + modValue ** powerValue / modValue ** powerValue * modValue ** powerValue);
 
             // Calculate the output based on the specified format
-            const outputX = parseInt(X1 + Math.pow(modValue, powerValue) * Math.ceil(-X1 / Math.pow(modValue, powerValue)));
-            const outputY = parseInt(Y1 + Math.pow(modValue, powerValue) * Math.ceil(-Y1 / Math.pow(modValue, powerValue)));
+            const outputX = BigInt(X1 + modValue ** powerValue * (Math.ceil(-X1 / modValue ** powerValue)));
+            const outputY = BigInt(Y1 + modValue ** powerValue * (Math.ceil(-Y1 / modValue ** powerValue)));
 
-            result = `Adjusted Result:\nX = ${outputX} + ${Math.pow(modValue, powerValue)}m\nY = ${outputY} + ${Math.pow(modValue, powerValue)}m`;
+            result = `Adjusted Result:\nX = ${outputX} + ${modValue ** powerValue}m\nY = ${outputY} + ${modValue ** powerValue}m`;
         } else {
-            result = `Final Result:\nX = ${X} + ${Math.pow(modValue, powerValue)}m\nY = ${Y} + ${Math.pow(modValue, powerValue)}m`;
+            result = `Final Result:\nX = ${X} + ${modValue ** powerValue}m\nY = ${Y} + ${modValue ** powerValue}m`;
         }
     }
 
@@ -67,7 +67,7 @@ function calculate() {
 
 // Function to calculate the Greatest Common Divisor (GCD) using Euclidean algorithm
 function gcd(a, b) {
-    while (b !== 0) {
+    while (b !== BigInt(0)) {
         const temp = b;
         b = a % b;
         a = temp;
