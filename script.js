@@ -15,20 +15,11 @@ function calculate() {
     const c = parseInt(coefficientsArray[2]);
     const d = parseInt(coefficientsArray[3]);
 
-    // Add a condition to check if d - b is not equal to 1
-    if (d - b !== 1) {
-        document.getElementById('result').innerText = 'ERROR';
-        return;
-    }
-
     const modValue = parseInt(document.getElementById('modInput').value);
     const powerValue = parseInt(document.getElementById('powerInput').value);
 
-    // Calculate the GCD of (ad - bc) and p
-    const gcdResult = gcd(Math.abs((a * d) - (b * c)), modValue);
-
-    // Add a condition to check if the GCD is not equal to 1
-    if (gcdResult !== 1) {
+    // Add conditions to check if d - b is not equal to 1 and gcd(ad - bc, p^n) is not equal to 1
+    if (d - b !== 1 || gcd(Math.abs((a * d) - (b * c)), Math.pow(modValue, powerValue)) !== 1) {
         document.getElementById('result').innerText = 'ERROR';
         return;
     }
